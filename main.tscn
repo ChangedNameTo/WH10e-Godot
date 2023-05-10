@@ -1,0 +1,192 @@
+[gd_scene load_steps=16 format=3 uid="uid://c8auk1j0vu30o"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_lcfdj"]
+[ext_resource type="PackedScene" uid="uid://djody28665fu3" path="res://model.tscn" id="2_5sudb"]
+[ext_resource type="Script" path="res://Events.gd" id="2_taxs0"]
+[ext_resource type="Theme" uid="uid://ddhu0dwpbv1ll" path="res://MinimalUI.tres" id="4_qap17"]
+[ext_resource type="Script" path="res://AttackerVPLabel.gd" id="5_xslhs"]
+[ext_resource type="Script" path="res://ConfirmMove.gd" id="6_3lm77"]
+[ext_resource type="Script" path="res://EventLog.gd" id="7_mjgqp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35tic"]
+size = Vector3(44, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tudwb"]
+size = Vector3(44, 2, 60)
+
+[sub_resource type="Gradient" id="Gradient_n1igh"]
+offsets = PackedFloat32Array(0, 0.317073)
+colors = PackedColorArray(0, 0, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vlu0k"]
+gradient = SubResource("Gradient_n1igh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4bhic"]
+texture = SubResource("GradientTexture2D_vlu0k")
+
+[sub_resource type="Gradient" id="Gradient_hkxhm"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.68, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u4vs5"]
+gradient = SubResource("Gradient_hkxhm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_npr17"]
+texture = SubResource("GradientTexture2D_u4vs5")
+
+[node name="Main" type="Node"]
+script = ExtResource("1_lcfdj")
+
+[node name="Events" type="Node" parent="."]
+script = ExtResource("2_taxs0")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_35tic")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_tudwb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 31.3178, 0)
+shadow_enabled = true
+
+[node name="Model" parent="." instance=ExtResource("2_5sudb")]
+
+[node name="Camera Pivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 4.816, 10.181, 19)
+
+[node name="Camera3D" type="Camera3D" parent="Camera Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.71225, 0, 0)
+projection = 1
+size = 19.0
+far = 100.0
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_qap17")
+
+[node name="ConfirmMove" type="Button" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -157.0
+offset_top = -72.0
+offset_right = -29.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("4_qap17")
+text = "Confirm Move?"
+script = ExtResource("6_3lm77")
+
+[node name="EventLogContainer" type="ScrollContainer" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -167.0
+offset_right = 406.0
+grow_vertical = 0
+theme = ExtResource("4_qap17")
+
+[node name="EventLog" type="ItemList" parent="UserInterface/EventLogContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+item_count = 2
+item_0/text = "Test"
+item_1/text = "Test2"
+script = ExtResource("7_mjgqp")
+
+[node name="Scoreboard" type="Panel" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="DefenderVPLabel" type="Label" parent="UserInterface/Scoreboard"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -15.0
+offset_right = -2.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Attacker VP: 0"
+script = ExtResource("5_xslhs")
+
+[node name="VSeparator" type="VSeparator" parent="UserInterface/Scoreboard"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_qap17")
+
+[node name="AttackerScoreboard" type="Panel" parent="UserInterface/Scoreboard"]
+layout_mode = 1
+offset_right = 640.0
+offset_bottom = 60.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_4bhic")
+
+[node name="AttackerVPLabel" type="Label" parent="UserInterface/Scoreboard/AttackerScoreboard"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -13.0
+offset_right = -37.0
+offset_bottom = 13.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 0
+text = "Attacker VP: 0"
+script = ExtResource("5_xslhs")
+
+[node name="DefenderScoreboard" type="Panel" parent="UserInterface/Scoreboard"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -640.0
+offset_bottom = 60.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_npr17")
+
+[node name="AttackerVPLabel" type="Label" parent="UserInterface/Scoreboard/DefenderScoreboard"]
+layout_mode = 2
+offset_left = 37.0
+offset_top = 17.0
+offset_right = 140.0
+offset_bottom = 43.0
+text = "Defender VP: 0"
+script = ExtResource("5_xslhs")

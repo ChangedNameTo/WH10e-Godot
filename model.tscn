@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://djody28665fu3"]
+
+[ext_resource type="PackedScene" uid="uid://dv8tox7rhxpb6" path="res://Models/warhammer_marine_suit.glb" id="1_grj3r"]
+[ext_resource type="Script" path="res://model.gd" id="1_uqc7y"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0gojb"]
+height = 0.128
+radius = 0.551
+
+[node name="Model" type="CharacterBody3D"]
+script = ExtResource("1_uqc7y")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(0.044, 0, 0, 0, 0.044, 0, 0, 0, 0.044, 0, 0, 0)
+
+[node name="SpaceMarine" parent="Pivot" instance=ExtResource("1_grj3r")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 21, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_0gojb")

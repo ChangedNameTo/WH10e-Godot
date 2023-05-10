@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://18ogomx4gyg5"
+path="res://.godot/imported/modularBuildings_005.obj-8206c46215b727be8569c79844bb2006.mesh"
+
+[deps]
+
+files=["res://.godot/imported/modularBuildings_005.obj-8206c46215b727be8569c79844bb2006.mesh"]
+
+source_file="res://Sprites/Models/modularBuildings_005.obj"
+dest_files=["res://.godot/imported/modularBuildings_005.obj-8206c46215b727be8569c79844bb2006.mesh", "res://.godot/imported/modularBuildings_005.obj-8206c46215b727be8569c79844bb2006.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
