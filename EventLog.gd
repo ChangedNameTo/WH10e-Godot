@@ -20,6 +20,6 @@ func string_pad_number(number):
 var on_log_event = func _on_log_event(type, text):
 	var time = Time.get_time_dict_from_system()
 	var time_string = string_pad_number(time.hour) +":" + string_pad_number(time.minute)+":" + string_pad_number(time.second)
-	var item_string = "[%s][%s] %s" % [time_string, type, text]
+	var item_string = "[%s] [%s] %s" % [time_string, type, text]
 	self.select(self.add_item(item_string))
 	self.ensure_current_is_visible()

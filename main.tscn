@@ -1,17 +1,25 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8auk1j0vu30o"]
+[gd_scene load_steps=30 format=3 uid="uid://c8auk1j0vu30o"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_lcfdj"]
 [ext_resource type="PackedScene" uid="uid://djody28665fu3" path="res://model.tscn" id="2_5sudb"]
 [ext_resource type="Script" path="res://Events.gd" id="2_taxs0"]
+[ext_resource type="Script" path="res://Globals.gd" id="3_0cnw1"]
 [ext_resource type="Theme" uid="uid://ddhu0dwpbv1ll" path="res://MinimalUI.tres" id="4_qap17"]
+[ext_resource type="PackedScene" uid="uid://c2do3ie4g5w6n" path="res://TerrainSpawner.tscn" id="5_nle7f"]
 [ext_resource type="Script" path="res://AttackerVPLabel.gd" id="5_xslhs"]
 [ext_resource type="Script" path="res://ConfirmMove.gd" id="6_3lm77"]
+[ext_resource type="Script" path="res://TroopTree.gd" id="7_lxof0"]
 [ext_resource type="Script" path="res://EventLog.gd" id="7_mjgqp"]
+[ext_resource type="Script" path="res://UnitCohesion.gd" id="10_8gu1f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_35tic"]
 size = Vector3(44, 2, 60)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avwym"]
+albedo_color = Color(0.364706, 0.364706, 0.364706, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_tudwb"]
+material = SubResource("StandardMaterial3D_avwym")
 size = Vector3(44, 2, 60)
 
 [sub_resource type="Gradient" id="Gradient_n1igh"]
@@ -24,6 +32,18 @@ gradient = SubResource("Gradient_n1igh")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4bhic"]
 texture = SubResource("GradientTexture2D_vlu0k")
 
+[sub_resource type="Gradient" id="Gradient_ub3iu"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lxsv0"]
+gradient = SubResource("Gradient_ub3iu")
+fill = 1
+fill_from = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0gsgh"]
+texture = SubResource("GradientTexture2D_lxsv0")
+expand_margin_bottom = 100.0
+
 [sub_resource type="Gradient" id="Gradient_hkxhm"]
 interpolation_mode = 2
 offsets = PackedFloat32Array(0.68, 1)
@@ -35,36 +55,74 @@ gradient = SubResource("Gradient_hkxhm")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_npr17"]
 texture = SubResource("GradientTexture2D_u4vs5")
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_jsq5d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k8fbk"]
+texture = SubResource("CanvasTexture_jsq5d")
+modulate_color = Color(0.529412, 0.529412, 0.529412, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g1gsf"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3t1l5"]
+texture = SubResource("CanvasTexture_g1gsf")
+modulate_color = Color(0.184314, 0.184314, 0.184314, 0.541176)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hawvk"]
+albedo_color = Color(0.164706, 0.164706, 0.164706, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xe1s2"]
+material = SubResource("StandardMaterial3D_hawvk")
+
 [node name="Main" type="Node"]
 script = ExtResource("1_lcfdj")
+model_scene = ExtResource("2_5sudb")
 
 [node name="Events" type="Node" parent="."]
 script = ExtResource("2_taxs0")
 
+[node name="Globals" type="Node" parent="."]
+script = ExtResource("3_0cnw1")
+
 [node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_35tic")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 mesh = SubResource("BoxMesh_tudwb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 31.3178, 0)
 shadow_enabled = true
 
-[node name="Model" parent="." instance=ExtResource("2_5sudb")]
-
 [node name="Camera Pivot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 4.816, 10.181, 19)
+transform = Transform3D(-4.37114e-08, 0.707107, -0.707107, 0, 0.707107, 0.707107, 1, 3.09086e-08, -3.09086e-08, -38.184, 23.181, 6)
 
 [node name="Camera3D" type="Camera3D" parent="Camera Pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.71225, 0, 0)
-projection = 1
+transform = Transform3D(1, -1.13133e-08, -1.95953e-08, 1.95953e-08, 0.866025, 0.5, 1.13133e-08, -0.5, 0.866025, -6.71225, 27.0032, -11.4469)
 size = 19.0
 far = 100.0
+
+[node name="TerrainSpawnRegions" type="Node3D" parent="."]
+
+[node name="TerrainSpawner1" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
+transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, 11, 0, 20)
+
+[node name="TerrainSpawner2" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
+transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, -11, 0, 20)
+
+[node name="TerrainSpawner3" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
+transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, 11, 0, 0)
+
+[node name="TerrainSpawner4" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
+transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, -11, 0, 0)
+
+[node name="TerrainSpawner5" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
+transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, 11, 0, -20)
+
+[node name="TerrainSpawner6" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
+transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, -11, 0, -20)
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3
@@ -75,84 +133,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_qap17")
 
-[node name="ConfirmMove" type="Button" parent="UserInterface"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -157.0
-offset_top = -72.0
-offset_right = -29.0
-offset_bottom = -32.0
-grow_horizontal = 0
-grow_vertical = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("4_qap17")
-text = "Confirm Move?"
-script = ExtResource("6_3lm77")
-
-[node name="EventLogContainer" type="ScrollContainer" parent="UserInterface"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -167.0
-offset_right = 406.0
-grow_vertical = 0
-theme = ExtResource("4_qap17")
-
-[node name="EventLog" type="ItemList" parent="UserInterface/EventLogContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-item_count = 2
-item_0/text = "Test"
-item_1/text = "Test2"
-script = ExtResource("7_mjgqp")
-
 [node name="Scoreboard" type="Panel" parent="UserInterface"]
+clip_contents = true
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = -1
 anchor_right = 1.0
-offset_bottom = 60.0
-grow_horizontal = 2
-
-[node name="DefenderVPLabel" type="Label" parent="UserInterface/Scoreboard"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -110.0
-offset_top = -15.0
-offset_right = -2.0
-offset_bottom = 11.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Attacker VP: 0"
-script = ExtResource("5_xslhs")
-
-[node name="VSeparator" type="VSeparator" parent="UserInterface/Scoreboard"]
-z_index = 1
-layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -2.0
-offset_right = 2.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("4_qap17")
+anchor_bottom = 0.055
 
 [node name="AttackerScoreboard" type="Panel" parent="UserInterface/Scoreboard"]
 layout_mode = 1
-offset_right = 640.0
-offset_bottom = 60.0
+anchors_preset = -1
+anchor_right = 0.45
+anchor_bottom = 1.0
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_4bhic")
 
 [node name="AttackerVPLabel" type="Label" parent="UserInterface/Scoreboard/AttackerScoreboard"]
@@ -172,14 +165,31 @@ size_flags_horizontal = 0
 text = "Attacker VP: 0"
 script = ExtResource("5_xslhs")
 
+[node name="TurnPhaseTracker" type="Panel" parent="UserInterface/Scoreboard"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_right = 0.55
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_0gsgh")
+
+[node name="TurnTracker" type="Label" parent="UserInterface/Scoreboard/TurnPhaseTracker"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
 [node name="DefenderScoreboard" type="Panel" parent="UserInterface/Scoreboard"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = -1
+anchor_left = 0.55
 anchor_right = 1.0
-offset_left = -640.0
-offset_bottom = 60.0
-grow_horizontal = 0
+anchor_bottom = 1.0
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_npr17")
 
 [node name="AttackerVPLabel" type="Label" parent="UserInterface/Scoreboard/DefenderScoreboard"]
@@ -190,3 +200,184 @@ offset_right = 140.0
 offset_bottom = 43.0
 text = "Defender VP: 0"
 script = ExtResource("5_xslhs")
+
+[node name="RightPanel" type="VBoxContainer" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85
+anchor_top = 0.055
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="TroopPanel" type="VBoxContainer" parent="UserInterface/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TroopPanelLabelContainer" type="Panel" parent="UserInterface/RightPanel/TroopPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TroopPanelLabel" type="RichTextLabel" parent="UserInterface/RightPanel/TroopPanel/TroopPanelLabelContainer"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -0.5
+offset_right = 0.5
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[b]Troop List[/b]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="TroopList" type="ScrollContainer" parent="UserInterface/RightPanel/TroopPanel"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 11.0
+
+[node name="TroopTree" type="Tree" parent="UserInterface/RightPanel/TroopPanel/TroopList"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_qap17")
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+script = ExtResource("7_lxof0")
+
+[node name="OrderQueue" type="VBoxContainer" parent="UserInterface/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OrderQueueLabelContainer" type="Panel" parent="UserInterface/RightPanel/OrderQueue"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OrderQueueLabel" type="RichTextLabel" parent="UserInterface/RightPanel/OrderQueue/OrderQueueLabelContainer"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -0.5
+offset_right = 0.5
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[b]Order Queue[/b]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="OrderQueueListContainer" type="ScrollContainer" parent="UserInterface/RightPanel/OrderQueue"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 11.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_k8fbk")
+
+[node name="OrderQueueList" type="ItemList" parent="UserInterface/RightPanel/OrderQueue/OrderQueueListContainer"]
+layout_mode = 2
+
+[node name="ConfirmationBox" type="GridContainer" parent="UserInterface/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.55
+
+[node name="ConfirmMove" type="Button" parent="UserInterface/RightPanel/ConfirmationBox"]
+z_as_relative = false
+layout_mode = 2
+text = "Confirm Move?"
+script = ExtResource("6_3lm77")
+
+[node name="UnitCohesion" type="Button" parent="UserInterface/RightPanel/ConfirmationBox"]
+z_as_relative = false
+layout_mode = 2
+toggle_mode = true
+text = "Toggle Unit Cohesion"
+script = ExtResource("10_8gu1f")
+
+[node name="BottomPanel" type="HBoxContainer" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8
+anchor_right = 0.85
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_right = -3.0
+grow_vertical = 0
+
+[node name="EventLogPanel" type="VBoxContainer" parent="UserInterface/BottomPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EventLogLabelContainer" type="Panel" parent="UserInterface/BottomPanel/EventLogPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EventLogLabel" type="RichTextLabel" parent="UserInterface/BottomPanel/EventLogPanel/EventLogLabelContainer"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -0.5
+offset_right = 0.5
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[b]Event Log[/b]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="EventLogContainer" type="ScrollContainer" parent="UserInterface/BottomPanel/EventLogPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+theme = ExtResource("4_qap17")
+
+[node name="EventLog" type="ItemList" parent="UserInterface/BottomPanel/EventLogPanel/EventLogContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("7_mjgqp")
+
+[node name="SelectedUnitPanel" type="VBoxContainer" parent="UserInterface/BottomPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_qap17")
+
+[node name="SelectedUnitLabelContainer" type="Panel" parent="UserInterface/BottomPanel/SelectedUnitPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SelectedUnitLabel" type="RichTextLabel" parent="UserInterface/BottomPanel/SelectedUnitPanel/SelectedUnitLabelContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[b]Selected Unit[/b]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="SelectedUnitDisplay" type="Panel" parent="UserInterface/BottomPanel/SelectedUnitPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_3t1l5")
+
+[node name="UndertableFog" type="MeshInstance3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, -10, 0)
+mesh = SubResource("PlaneMesh_xe1s2")

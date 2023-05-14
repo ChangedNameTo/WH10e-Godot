@@ -6,24 +6,28 @@ extends CharacterBody3D
 @export var fall_acceleration = 75
 
 var wounds = 2
+var unit = "Space Marine Intercessors"
+var team = Globals.Team.Attacker
 
 var target_velocity = Vector3.ZERO
 
+func _ready():
+	Events.emit_signal("log_event", "Space Marine", "Entered Field")
+	Events.emit_signal("model_entered_table", self, unit, team)
 
 func _physics_process(delta):
 	var direction = Vector3.ZERO
 
 	if Input.is_action_pressed("move_right"):
-		direction.x += 1
-	if Input.is_action_pressed("move_left"):
-		direction.x -= 1
-	if Input.is_action_pressed("move_back"):
 		direction.z += 1
-	if Input.is_action_pressed("move_forward"):
+	if Input.is_action_pressed("move_left"):
 		direction.z -= 1
+	if Input.is_action_pressed("move_back"):
+		direction.x -= 1
+	if Input.is_action_pressed("move_forward"):
+		direction.x += 1
 
 	if direction != Vector3.ZERO:
-		print("lookin")
 		direction = direction.normalized()
 		$Pivot.look_at(position + direction, Vector3.UP)
 
@@ -38,3 +42,6 @@ func _physics_process(delta):
 	# Moving the Character
 	velocity = target_velocity
 	move_and_slide()
+
+func get_team():
+	return team
