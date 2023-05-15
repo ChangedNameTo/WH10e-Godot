@@ -5,15 +5,26 @@ extends CharacterBody3D
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
 
-var wounds = 2
-var unit = "Space Marine Intercessors"
-var team = Globals.Team.Attacker
-
 var target_velocity = Vector3.ZERO
 
+var wounds;
+var move;
+var unit;
+var team;
+var number
+
+func init(unit_p, team_p, move_p, wounds_p, number_p):
+	wounds = wounds_p;
+	move = move_p;
+	
+	unit = unit_p;
+	team = team_p;
+	number = number_p;
+
 func _ready():
-	Events.emit_signal("log_event", "Space Marine", "Entered Field")
-	Events.emit_signal("model_entered_table", self, unit, team)
+	pass
+#	Events.emit_signal("log_event", "Space Marine", "Entered Field")
+#	Events.emit_signal("model_entered_table", self, unit, team)
 
 func _physics_process(delta):
 	var direction = Vector3.ZERO
@@ -45,3 +56,10 @@ func _physics_process(delta):
 
 func get_team():
 	return team
+
+func get_unit():
+	return unit.get_unit()
+
+func get_model_name():
+	return get_unit() + " " + number
+

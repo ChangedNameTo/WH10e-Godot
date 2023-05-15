@@ -1,6 +1,6 @@
 extends Node
 
-enum Team{Attacker, Defender}
+enum Team {Attacker, Defender}
 
 const Colors = {
 	# Ultramarine Blue
@@ -24,3 +24,5 @@ const Game_Format = {
 	"Strike_Force" = strike_force,
 	"Onslaught" = "Onslaught"
 }
+
+enum Type {Unit,Model}

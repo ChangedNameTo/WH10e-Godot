@@ -1,7 +1,6 @@
-[gd_scene load_steps=30 format=3 uid="uid://c8auk1j0vu30o"]
+[gd_scene load_steps=31 format=3 uid="uid://c8auk1j0vu30o"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_lcfdj"]
-[ext_resource type="PackedScene" uid="uid://djody28665fu3" path="res://model.tscn" id="2_5sudb"]
 [ext_resource type="Script" path="res://Events.gd" id="2_taxs0"]
 [ext_resource type="Script" path="res://Globals.gd" id="3_0cnw1"]
 [ext_resource type="Theme" uid="uid://ddhu0dwpbv1ll" path="res://MinimalUI.tres" id="4_qap17"]
@@ -11,6 +10,8 @@
 [ext_resource type="Script" path="res://TroopTree.gd" id="7_lxof0"]
 [ext_resource type="Script" path="res://EventLog.gd" id="7_mjgqp"]
 [ext_resource type="Script" path="res://UnitCohesion.gd" id="10_8gu1f"]
+[ext_resource type="Script" path="res://PHolderLabel.gd" id="11_a5d7m"]
+[ext_resource type="PackedScene" uid="uid://dnids2lkxti1b" path="res://unit.tscn" id="11_kcp4g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_35tic"]
 size = Vector3(44, 2, 60)
@@ -75,7 +76,6 @@ material = SubResource("StandardMaterial3D_hawvk")
 
 [node name="Main" type="Node"]
 script = ExtResource("1_lcfdj")
-model_scene = ExtResource("2_5sudb")
 
 [node name="Events" type="Node" parent="."]
 script = ExtResource("2_taxs0")
@@ -378,6 +378,14 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_3t1l5")
 
+[node name="PHolderLabel" type="Label" parent="UserInterface/BottomPanel/SelectedUnitPanel/SelectedUnitDisplay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("11_a5d7m")
+
 [node name="UndertableFog" type="MeshInstance3D" parent="."]
 transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, -10, 0)
 mesh = SubResource("PlaneMesh_xe1s2")
+
+[node name="Unit" parent="." instance=ExtResource("11_kcp4g")]
