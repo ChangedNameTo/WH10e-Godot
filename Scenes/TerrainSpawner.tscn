@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2do3ie4g5w6n"]
+
+[ext_resource type="Script" path="res://Scripts/TerrainSpawner.gd" id="1_eibni"]
+[ext_resource type="PackedScene" uid="uid://bx0b25uow6nhr" path="res://Scenes/tree_terrain.tscn" id="2_kor42"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5l2d"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 0.509804, 0, 1)
+emission = Color(0.803922, 0.803922, 0.803922, 1)
+rim_tint = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0jc5x"]
+material = SubResource("StandardMaterial3D_u5l2d")
+size = Vector2(1, 1)
+
+[node name="TerrainSpawner" type="MeshInstance3D"]
+transform = Transform3D(0.999999, -0.000871814, 0.000763982, 0.000871444, 1, 0.000485526, -0.000764405, -0.00048486, 1, 0, 0, 0)
+mesh = SubResource("PlaneMesh_0jc5x")
+script = ExtResource("1_eibni")
+tree_scene = ExtResource("2_kor42")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0.000284869, 0.000840231, -0.000795566, 0.707107, 0.707106, -0.000392701, -0.707106, 0.707107, 0, 1, 1)
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]

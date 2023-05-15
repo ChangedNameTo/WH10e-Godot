@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="WH10e"
-run/main_scene="res://main.tscn"
+run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Events="*res://Events.gd"
-Globals="*res://Globals.gd"
+Events="*res://Scripts/Events.gd"
+Globals="*res://Scripts/Globals.gd"
 
 [display]
 
@@ -34,7 +34,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-git-plugin/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 
