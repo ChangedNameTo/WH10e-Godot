@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://by1t145lugwn0"]
+
+[ext_resource type="Script" path="res://Scenes/tabletop.gd" id="1_vloms"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35tic"]
+size = Vector3(44, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avwym"]
+albedo_color = Color(0.364706, 0.364706, 0.364706, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tudwb"]
+material = SubResource("StandardMaterial3D_avwym")
+size = Vector3(44, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l5a3f"]
+transparency = 1
+albedo_color = Color(0.258824, 0.4, 0.960784, 0.25098)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ry216"]
+transparency = 1
+albedo_color = Color(0.42, 0.01, 0, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amc71"]
+transparency = 1
+albedo_color = Color(0.58, 0.58, 0.58, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ev0qm"]
+transparency = 1
+albedo_color = Color(0.58, 0.58, 0.58, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2xbm6"]
+transparency = 1
+albedo_color = Color(0.58, 0.58, 0.58, 0.25)
+
+[node name="Tabletop" type="StaticBody3D"]
+script = ExtResource("1_vloms")
+
+[node name="TabletopCollider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_35tic")
+
+[node name="TabletopMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_tudwb")
+skeleton = NodePath("../..")
+
+[node name="AnnihilationMissionZones" type="CSGCombiner3D" parent="."]
+operation = 2
+
+[node name="AttackerDeploymentZone" type="CSGBox3D" parent="AnnihilationMissionZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2, 15)
+size = Vector3(22, 1, 30)
+material = SubResource("StandardMaterial3D_l5a3f")
+
+[node name="DefenderDeploymentZone" type="CSGBox3D" parent="AnnihilationMissionZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 2, -15)
+size = Vector3(22, 1, 30)
+material = SubResource("StandardMaterial3D_ry216")
+
+[node name="NoMansLand" type="CSGCombiner3D" parent="AnnihilationMissionZones"]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="AnnihilationMissionZones/NoMansLand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+radius = 10.0
+height = 1.0
+sides = 64
+material = SubResource("StandardMaterial3D_amc71")
+
+[node name="NoMansLandSE" type="CSGBox3D" parent="AnnihilationMissionZones/NoMansLand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 2, 15)
+size = Vector3(22, 1, 30)
+material = SubResource("StandardMaterial3D_ev0qm")
+
+[node name="NoMansLandNW" type="CSGBox3D" parent="AnnihilationMissionZones/NoMansLand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2, -15)
+size = Vector3(22, 1, 30)
+material = SubResource("StandardMaterial3D_2xbm6")

@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cy34hepvg1f0y"]
+
+[node name="DiceRoller" type="Node3D"]

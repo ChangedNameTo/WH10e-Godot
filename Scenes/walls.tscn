@@ -1,0 +1,76 @@
+[gd_scene load_steps=8 format=3 uid="uid://bq7qno7qdf8cl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35tic"]
+size = Vector3(44, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slc3t"]
+albedo_color = Color(0.290196, 0.152941, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cmybv"]
+material = SubResource("StandardMaterial3D_slc3t")
+size = Vector3(2, 4, 62)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nmi8y"]
+material = SubResource("StandardMaterial3D_slc3t")
+size = Vector3(2, 4, 62)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wbjjk"]
+size = Vector3(40, 2, 44)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fjucg"]
+material = SubResource("StandardMaterial3D_slc3t")
+size = Vector3(1, 4, 48)
+
+[sub_resource type="BoxMesh" id="BoxMesh_md0hx"]
+material = SubResource("StandardMaterial3D_slc3t")
+size = Vector3(1, 4, 48)
+
+[node name="Walls" type="Node3D"]
+
+[node name="SouthWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, 0)
+input_ray_pickable = false
+
+[node name="SouthWallCollider" type="CollisionShape3D" parent="SouthWall"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_35tic")
+
+[node name="SouthWallMesh" type="MeshInstance3D" parent="SouthWall"]
+mesh = SubResource("BoxMesh_cmybv")
+skeleton = NodePath("../../..")
+
+[node name="NorthWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0, 0)
+input_ray_pickable = false
+
+[node name="NorthWallCollider" type="CollisionShape3D" parent="NorthWall"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_35tic")
+
+[node name="NorthWallMesh" type="MeshInstance3D" parent="NorthWall"]
+mesh = SubResource("BoxMesh_nmi8y")
+skeleton = NodePath("../../..")
+
+[node name="WestWall" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 31)
+input_ray_pickable = false
+
+[node name="WestWallCollider" type="CollisionShape3D" parent="WestWall"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_wbjjk")
+
+[node name="WestWallMesh" type="MeshInstance3D" parent="WestWall"]
+mesh = SubResource("BoxMesh_fjucg")
+skeleton = NodePath("../../..")
+
+[node name="EastWall" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -31)
+input_ray_pickable = false
+
+[node name="WestWallCollider" type="CollisionShape3D" parent="EastWall"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_wbjjk")
+
+[node name="WestWallMesh" type="MeshInstance3D" parent="EastWall"]
+mesh = SubResource("BoxMesh_md0hx")
+skeleton = NodePath("../../..")

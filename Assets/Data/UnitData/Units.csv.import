@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dwdjatyxmitls"
+
+[deps]
+
+files=["res://Assets/Data/UnitData/Units.UnitName.translation", "res://Assets/Data/UnitData/Units.Type.translation", "res://Assets/Data/UnitData/Units.Move.translation", "res://Assets/Data/UnitData/Units.Toughness.translation", "res://Assets/Data/UnitData/Units.Save.translation", "res://Assets/Data/UnitData/Units.Wounds.translation", "res://Assets/Data/UnitData/Units.Leadership.translation", "res://Assets/Data/UnitData/Units.OC.translation", "res://Assets/Data/UnitData/Units.ModelCount.translation"]
+
+source_file="res://Assets/Data/UnitData/Units.csv"
+dest_files=["res://Assets/Data/UnitData/Units.UnitName.translation", "res://Assets/Data/UnitData/Units.Type.translation", "res://Assets/Data/UnitData/Units.Move.translation", "res://Assets/Data/UnitData/Units.Toughness.translation", "res://Assets/Data/UnitData/Units.Save.translation", "res://Assets/Data/UnitData/Units.Wounds.translation", "res://Assets/Data/UnitData/Units.Leadership.translation", "res://Assets/Data/UnitData/Units.OC.translation", "res://Assets/Data/UnitData/Units.ModelCount.translation"]
+
+[params]
+
+compress=true
+delimiter=0
