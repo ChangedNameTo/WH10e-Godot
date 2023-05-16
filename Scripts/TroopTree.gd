@@ -27,37 +27,48 @@ func defending_tree():
 func _process(delta):
 	pass
 
+# Returns TreeItem
+func locate_unit(model_instance):
+	var subtree;
+	if model_instance.get_team() == Globals.Team.Attacking:
+		subtree = attacking_tree()
+	else:
+		subtree = defending_tree()
+	
+	var child = subtree.get_children()[0]
+	while(child != null):
+		if child.get_metadata(0) == model_instance.get_unit():
+			return child
+		else:
+			child = child.get_next()
+
 var on_unit_enter_army = func _on_unit_enter_army(unit_instance):
 	var new_unit;
-	if unit_instance.get_team() == Globals.Team.Attacker:
+	if unit_instance.get_team() == Globals.Team.Attacking:
 		new_unit = self.create_item(attacking_tree())
 	else:
 		new_unit = self.create_item(defending_tree())
 		
-	new_unit.set_text(0, unit_instance.get_unit())
+	new_unit.set_text(0, unit_instance.get_unit_name())
 	new_unit.set_text(1, unit_instance.get_model_count())
 	
 	new_unit.set_metadata(0, unit_instance)
 	new_unit.set_metadata(1, Globals.Type.Unit)
 
 var on_model_enter_table = func _on_model_enter_table(model_instance):
-	var new_unit;
-	if model_instance.get_team() == Globals.Team.Attacker:
-		new_unit = self.create_item(attacking_tree())
-	else:
-		new_unit = self.create_item(defending_tree())
+	var parent_unit = locate_unit(model_instance)
+	var new_model = self.create_item(parent_unit);
 
-	new_unit.set_text(0, model_instance.get_model_name())
+	# Update our TreeItem text
+	new_model.set_text(0, model_instance.get_model_name())
+	parent_unit.set_text(1, parent_unit.get_metadata(0).get_model_count())
 	
 	# Stores the original model instance so we can find it later
-	new_unit.set_metadata(0, model_instance)
+	new_model.set_metadata(0, model_instance)
 
 var on_cell_selected = func _on_cell_selected():
 	var item = self.get_selected()
 	
-
-	
-	print(item)
 	var selected_item = item.get_metadata(0)
 	
 	# Ensure selected item is a unit

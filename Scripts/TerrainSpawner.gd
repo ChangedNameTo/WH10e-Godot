@@ -4,11 +4,12 @@ extends MeshInstance3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Slightly change brightness to show regions
-	var material = self.mesh.surface_get_material(0)
-	var curr_albedo = material.albedo_color
-	var offset = randf_range(-0.1, 0.1)
-	material.set_albedo(curr_albedo.darkened(offset))
+#	# Slightly change brightness to show regions
+#	var material = self.mesh.surface_get_material(0)
+#
+#	var curr_albedo = material.albedo_color
+#	var albedo_offset = randf_range(-0.5, 0.5)
+#	material.set_albedo(curr_albedo.darkened(albedo_offset))
 	
 	var terrain_piece = tree_scene.instantiate()
 	

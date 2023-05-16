@@ -6,8 +6,14 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	
+	if Globals.selectedUnit:
+		self.text = Globals.selectedUnit.get_unit_name()
+	else:
+		self.text = "No Unit Selected"
 
 var on_unit_selected = func _on_unit_selected(unit_instance):
-	print(unit_instance)
-	self.text = unit_instance.get_unit()
+	self.text = unit_instance.get_unit_name()
+
+var on_unit_deselected = func _on_unit_deselected():
+	self.text = "No Selected Unit"

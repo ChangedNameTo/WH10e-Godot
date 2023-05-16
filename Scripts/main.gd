@@ -1,9 +1,29 @@
 extends Node
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
+var currentGamePhase;
+var currentGameTurn;
+var currentSide;
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _ready():
+	game_start()
+
+func game_start():
+	self.currentGamePhase = Globals.Phases.MusterArmies
+	self.currentGameTurn = 1
+	self.currentSide = Globals.Team.Attacking
+	
+
+func get_current_game_phase():
+	return self.currentGamePhase
+	
+func get_current_game_turn():
+	return self.currentGameTurn
+	
+func get_current_side():
+	return self.currentSide
+	
+func get_attacking_army():
+	return $AttackingArmy
+
+func get_defending_army():
+	return $DefendingArmy

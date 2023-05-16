@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bx0b25uow6nhr"]
 
-[ext_resource type="PackedScene" uid="uid://cyrrnq757fyfo" path="res://Models/Terrain/Maple Tree/maple_tree.glb" id="1_ti16k"]
+[ext_resource type="PackedScene" uid="uid://cyrrnq757fyfo" path="res://Assets/Models/Terrain/Maple Tree/maple_tree.glb" id="1_ti16k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mncgk"]
 size = Vector3(237, 3, 237)

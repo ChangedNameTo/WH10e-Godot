@@ -1,28 +1,28 @@
-[gd_scene load_steps=32 format=3 uid="uid://c8auk1j0vu30o"]
+[gd_scene load_steps=36 format=3 uid="uid://dtqcghc0ecx3w"]
 
-[ext_resource type="Script" path="res://Scripts/main.gd" id="1_c2e72"]
+[ext_resource type="Script" path="res://Scripts/Main.gd" id="1_lugua"]
 [ext_resource type="Script" path="res://Scripts/Events.gd" id="2_yyirt"]
 [ext_resource type="Script" path="res://Scripts/Globals.gd" id="3_go2xq"]
+[ext_resource type="PackedScene" uid="uid://by1t145lugwn0" path="res://Scenes/tabletop.tscn" id="4_f1w4r"]
 [ext_resource type="Theme" uid="uid://ddhu0dwpbv1ll" path="res://Assets/Theme/MinimalUI.tres" id="4_qap17"]
-[ext_resource type="PackedScene" uid="uid://c2do3ie4g5w6n" path="res://Scenes/TerrainSpawner.tscn" id="5_nle7f"]
-[ext_resource type="Script" path="res://AttackerVPLabel.gd" id="5_xslhs"]
+[ext_resource type="PackedScene" uid="uid://b2yrwqx8r6b7q" path="res://Scenes/terrain_spawn_regions.tscn" id="5_56gn5"]
+[ext_resource type="PackedScene" uid="uid://du5f2mwnqvpsp" path="res://Scenes/faction_selection.tscn" id="5_dqhtg"]
 [ext_resource type="Script" path="res://Scripts/AttackerVPLabel.gd" id="6_1flv4"]
+[ext_resource type="PackedScene" uid="uid://bq7qno7qdf8cl" path="res://Scenes/walls.tscn" id="6_7hc8r"]
 [ext_resource type="Script" path="res://Scripts/TroopTree.gd" id="8_8fcdb"]
 [ext_resource type="Script" path="res://Scripts/ConfirmMove.gd" id="9_mp6ha"]
 [ext_resource type="Script" path="res://Scripts/UnitCohesion.gd" id="10_56ujx"]
 [ext_resource type="Script" path="res://Scripts/EventLog.gd" id="11_04j4t"]
 [ext_resource type="PackedScene" uid="uid://dnids2lkxti1b" path="res://Scenes/unit.tscn" id="11_kcp4g"]
 [ext_resource type="Script" path="res://Scripts/PHolderLabel.gd" id="12_7owpn"]
+[ext_resource type="FontFile" uid="uid://cf5lhrgs06s8a" path="res://Assets/Fonts/Roboto Font/Roboto-Bold.ttf" id="12_8ecvn"]
+[ext_resource type="Script" path="res://Scripts/UnitModelList.gd" id="13_q2uat"]
+[ext_resource type="Script" path="res://Scripts/StatGridContainer.gd" id="14_505pd"]
+[ext_resource type="PackedScene" uid="uid://cpkhuvpujqoa1" path="res://Scenes/army.tscn" id="18_4bxqk"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_35tic"]
-size = Vector3(44, 2, 60)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avwym"]
-albedo_color = Color(0.364706, 0.364706, 0.364706, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_tudwb"]
-material = SubResource("StandardMaterial3D_avwym")
-size = Vector3(44, 2, 60)
+[sub_resource type="LabelSettings" id="LabelSettings_88n4p"]
+font = ExtResource("12_8ecvn")
+font_size = 28
 
 [sub_resource type="Gradient" id="Gradient_n1igh"]
 offsets = PackedFloat32Array(0, 0.317073)
@@ -63,20 +63,25 @@ texture = SubResource("GradientTexture2D_u4vs5")
 texture = SubResource("CanvasTexture_jsq5d")
 modulate_color = Color(0.529412, 0.529412, 0.529412, 1)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_g1gsf"]
+[sub_resource type="LabelSettings" id="LabelSettings_cft1g"]
+font = ExtResource("12_8ecvn")
+font_size = 24
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3t1l5"]
-texture = SubResource("CanvasTexture_g1gsf")
-modulate_color = Color(0.184314, 0.184314, 0.184314, 0.541176)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_peljl"]
+draw_center = false
+border_width_bottom = 1
+border_blend = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hawvk"]
-albedo_color = Color(0.164706, 0.164706, 0.164706, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_iuvdh"]
+font = ExtResource("12_8ecvn")
+font_size = 22
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_xe1s2"]
-material = SubResource("StandardMaterial3D_hawvk")
+[sub_resource type="LabelSettings" id="LabelSettings_kw3u7"]
+font = ExtResource("12_8ecvn")
+font_size = 20
 
 [node name="Main" type="Node"]
-script = ExtResource("1_c2e72")
+script = ExtResource("1_lugua")
 
 [node name="Events" type="Node" parent="."]
 script = ExtResource("2_yyirt")
@@ -84,64 +89,81 @@ script = ExtResource("2_yyirt")
 [node name="Globals" type="Node" parent="."]
 script = ExtResource("3_go2xq")
 
-[node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("BoxShape3D_35tic")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("BoxMesh_tudwb")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 31.3178, 0)
-shadow_enabled = true
-
-[node name="Camera Pivot" type="Marker3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0.707107, -0.707107, 0, 0.707107, 0.707107, 1, 3.09086e-08, -3.09086e-08, -38.184, 23.181, 6)
-
-[node name="Camera3D" type="Camera3D" parent="Camera Pivot"]
-transform = Transform3D(1, -1.13133e-08, -1.95953e-08, 1.95953e-08, 0.866025, 0.5, 1.13133e-08, -0.5, 0.866025, -6.71225, 27.0032, -11.4469)
-size = 19.0
-far = 100.0
-
-[node name="TerrainSpawnRegions" type="Node3D" parent="."]
-
-[node name="TerrainSpawner1" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
-transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, 11, 0, 20)
-
-[node name="TerrainSpawner2" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
-transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, -11, 0, 20)
-
-[node name="TerrainSpawner3" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
-transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, 11, 0, 0)
-
-[node name="TerrainSpawner4" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
-transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, -11, 0, 0)
-
-[node name="TerrainSpawner5" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
-transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, 11, 0, -20)
-
-[node name="TerrainSpawner6" parent="TerrainSpawnRegions" instance=ExtResource("5_nle7f")]
-transform = Transform3D(22, -0.0261545, 0.0152796, 0.0191718, 30, 0.00971052, -0.0168169, -0.0145458, 20, -11, 0, -20)
-
-[node name="UserInterface" type="Control" parent="."]
+[node name="GameSetupMenu" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="GameSetupMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FactionSelectionContainer" type="VBoxContainer" parent="GameSetupMenu/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -244.0
+offset_right = 250.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FactionSelectionTitle" type="Label" parent="GameSetupMenu/Panel/FactionSelectionContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Faction Selection"
+label_settings = SubResource("LabelSettings_88n4p")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameSetupMenu/Panel/FactionSelectionContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="AttackingFactionSelection" parent="GameSetupMenu/Panel/FactionSelectionContainer/HBoxContainer" instance=ExtResource("5_dqhtg")]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="GameSetupMenu/Panel/FactionSelectionContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="DefendingFactionSelection" parent="GameSetupMenu/Panel/FactionSelectionContainer/HBoxContainer" instance=ExtResource("5_dqhtg")]
+layout_mode = 2
+team = 1
+
+[node name="ConfirmFactionSelection" type="Button" parent="GameSetupMenu/Panel/FactionSelectionContainer"]
+layout_mode = 2
+text = "Confirm Faction Selection"
+
+[node name="GameUserInterface" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 theme = ExtResource("4_qap17")
 
-[node name="Scoreboard" type="Panel" parent="UserInterface"]
+[node name="Scoreboard" type="Panel" parent="GameUserInterface"]
 clip_contents = true
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.055
 
-[node name="AttackerScoreboard" type="Panel" parent="UserInterface/Scoreboard"]
+[node name="AttackerScoreboard" type="Panel" parent="GameUserInterface/Scoreboard"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.45
@@ -149,7 +171,7 @@ anchor_bottom = 1.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_4bhic")
 
-[node name="AttackerVPLabel" type="Label" parent="UserInterface/Scoreboard/AttackerScoreboard"]
+[node name="AttackerVPLabel" type="Label" parent="GameUserInterface/Scoreboard/AttackerScoreboard"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -166,7 +188,7 @@ size_flags_horizontal = 0
 text = "Attacker VP: 0"
 script = ExtResource("6_1flv4")
 
-[node name="TurnPhaseTracker" type="Panel" parent="UserInterface/Scoreboard"]
+[node name="TurnPhaseTracker" type="Panel" parent="GameUserInterface/Scoreboard"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.45
@@ -174,7 +196,7 @@ anchor_right = 0.55
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_0gsgh")
 
-[node name="TurnTracker" type="Label" parent="UserInterface/Scoreboard/TurnPhaseTracker"]
+[node name="TurnTracker" type="Label" parent="GameUserInterface/Scoreboard/TurnPhaseTracker"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -184,7 +206,7 @@ offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
 
-[node name="DefenderScoreboard" type="Panel" parent="UserInterface/Scoreboard"]
+[node name="DefenderScoreboard" type="Panel" parent="GameUserInterface/Scoreboard"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.55
@@ -193,16 +215,16 @@ anchor_bottom = 1.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_npr17")
 
-[node name="AttackerVPLabel" type="Label" parent="UserInterface/Scoreboard/DefenderScoreboard"]
+[node name="AttackerVPLabel" type="Label" parent="GameUserInterface/Scoreboard/DefenderScoreboard"]
 layout_mode = 2
 offset_left = 37.0
 offset_top = 17.0
 offset_right = 140.0
 offset_bottom = 43.0
 text = "Defender VP: 0"
-script = ExtResource("5_xslhs")
+script = ExtResource("6_1flv4")
 
-[node name="RightPanel" type="VBoxContainer" parent="UserInterface"]
+[node name="RightPanel" type="VBoxContainer" parent="GameUserInterface"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.85
@@ -215,15 +237,15 @@ offset_bottom = 3.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="TroopPanel" type="VBoxContainer" parent="UserInterface/RightPanel"]
+[node name="TroopPanel" type="VBoxContainer" parent="GameUserInterface/RightPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TroopPanelLabelContainer" type="Panel" parent="UserInterface/RightPanel/TroopPanel"]
+[node name="TroopPanelLabelContainer" type="Panel" parent="GameUserInterface/RightPanel/TroopPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TroopPanelLabel" type="RichTextLabel" parent="UserInterface/RightPanel/TroopPanel/TroopPanelLabelContainer"]
+[node name="TroopPanelLabel" type="RichTextLabel" parent="GameUserInterface/RightPanel/TroopPanel/TroopPanelLabelContainer"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 5
@@ -238,31 +260,30 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="TroopList" type="ScrollContainer" parent="UserInterface/RightPanel/TroopPanel"]
-clip_contents = false
+[node name="TroopList" type="ScrollContainer" parent="GameUserInterface/RightPanel/TroopPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 11.0
 
-[node name="TroopTree" type="Tree" parent="UserInterface/RightPanel/TroopPanel/TroopList"]
+[node name="TroopTree" type="Tree" parent="GameUserInterface/RightPanel/TroopPanel/TroopList"]
 clip_contents = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_qap17")
+columns = 2
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
 script = ExtResource("8_8fcdb")
 
-[node name="OrderQueue" type="VBoxContainer" parent="UserInterface/RightPanel"]
+[node name="OrderQueue" type="VBoxContainer" parent="GameUserInterface/RightPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="OrderQueueLabelContainer" type="Panel" parent="UserInterface/RightPanel/OrderQueue"]
+[node name="OrderQueueLabelContainer" type="Panel" parent="GameUserInterface/RightPanel/OrderQueue"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="OrderQueueLabel" type="RichTextLabel" parent="UserInterface/RightPanel/OrderQueue/OrderQueueLabelContainer"]
+[node name="OrderQueueLabel" type="RichTextLabel" parent="GameUserInterface/RightPanel/OrderQueue/OrderQueueLabelContainer"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 5
@@ -277,34 +298,34 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="OrderQueueListContainer" type="ScrollContainer" parent="UserInterface/RightPanel/OrderQueue"]
+[node name="OrderQueueListContainer" type="ScrollContainer" parent="GameUserInterface/RightPanel/OrderQueue"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 11.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_k8fbk")
 
-[node name="OrderQueueList" type="ItemList" parent="UserInterface/RightPanel/OrderQueue/OrderQueueListContainer"]
+[node name="OrderQueueList" type="ItemList" parent="GameUserInterface/RightPanel/OrderQueue/OrderQueueListContainer"]
 layout_mode = 2
 
-[node name="ConfirmationBox" type="GridContainer" parent="UserInterface/RightPanel"]
+[node name="ConfirmationBox" type="GridContainer" parent="GameUserInterface/RightPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.55
 
-[node name="ConfirmMove" type="Button" parent="UserInterface/RightPanel/ConfirmationBox"]
+[node name="ConfirmMove" type="Button" parent="GameUserInterface/RightPanel/ConfirmationBox"]
 z_as_relative = false
 layout_mode = 2
 text = "Confirm Move?"
 script = ExtResource("9_mp6ha")
 
-[node name="UnitCohesion" type="Button" parent="UserInterface/RightPanel/ConfirmationBox"]
+[node name="UnitCohesion" type="Button" parent="GameUserInterface/RightPanel/ConfirmationBox"]
 z_as_relative = false
 layout_mode = 2
 toggle_mode = true
 text = "Toggle Unit Cohesion"
 script = ExtResource("10_56ujx")
 
-[node name="BottomPanel" type="HBoxContainer" parent="UserInterface"]
+[node name="BottomPanel" type="HBoxContainer" parent="GameUserInterface"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.8
@@ -314,15 +335,15 @@ offset_left = 3.0
 offset_right = -3.0
 grow_vertical = 0
 
-[node name="EventLogPanel" type="VBoxContainer" parent="UserInterface/BottomPanel"]
+[node name="EventLogPanel" type="VBoxContainer" parent="GameUserInterface/BottomPanel"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="EventLogLabelContainer" type="Panel" parent="UserInterface/BottomPanel/EventLogPanel"]
+[node name="EventLogLabelContainer" type="Panel" parent="GameUserInterface/BottomPanel/EventLogPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="EventLogLabel" type="RichTextLabel" parent="UserInterface/BottomPanel/EventLogPanel/EventLogLabelContainer"]
+[node name="EventLogLabel" type="RichTextLabel" parent="GameUserInterface/BottomPanel/EventLogPanel/EventLogLabelContainer"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 5
@@ -337,28 +358,28 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="EventLogContainer" type="ScrollContainer" parent="UserInterface/BottomPanel/EventLogPanel"]
+[node name="EventLogContainer" type="ScrollContainer" parent="GameUserInterface/BottomPanel/EventLogPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 theme = ExtResource("4_qap17")
 
-[node name="EventLog" type="ItemList" parent="UserInterface/BottomPanel/EventLogPanel/EventLogContainer"]
+[node name="EventLog" type="ItemList" parent="GameUserInterface/BottomPanel/EventLogPanel/EventLogContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("11_04j4t")
 
-[node name="SelectedUnitPanel" type="VBoxContainer" parent="UserInterface/BottomPanel"]
+[node name="SelectedUnitPanel" type="VBoxContainer" parent="GameUserInterface/BottomPanel"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_qap17")
 
-[node name="SelectedUnitLabelContainer" type="Panel" parent="UserInterface/BottomPanel/SelectedUnitPanel"]
+[node name="SelectedUnitLabelContainer" type="Panel" parent="GameUserInterface/BottomPanel/SelectedUnitPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SelectedUnitLabel" type="RichTextLabel" parent="UserInterface/BottomPanel/SelectedUnitPanel/SelectedUnitLabelContainer"]
+[node name="SelectedUnitLabel" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/SelectedUnitLabelContainer"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -367,26 +388,181 @@ offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
-bbcode_enabled = true
-text = "[b]Selected Unit[/b]"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
+text = "Selected Unit"
+label_settings = SubResource("LabelSettings_cft1g")
 
-[node name="SelectedUnitDisplay" type="Panel" parent="UserInterface/BottomPanel/SelectedUnitPanel"]
+[node name="Panel" type="Panel" parent="GameUserInterface/BottomPanel/SelectedUnitPanel"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_3t1l5")
 
-[node name="PHolderLabel" type="Label" parent="UserInterface/BottomPanel/SelectedUnitPanel/SelectedUnitDisplay"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="SelectedUnitDisplay" type="HBoxContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+
+[node name="SelectedUnitPanelSpotlight" type="VBoxContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_qap17")
+
+[node name="SelectedUnitNameLabel" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight"]
+layout_mode = 2
+theme = ExtResource("4_qap17")
+theme_override_fonts/font = ExtResource("12_8ecvn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_peljl")
+text = "Blah
+"
+label_settings = SubResource("LabelSettings_iuvdh")
+horizontal_alignment = 1
 script = ExtResource("12_7owpn")
 
-[node name="UndertableFog" type="MeshInstance3D" parent="."]
-transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, -10, 0)
-mesh = SubResource("PlaneMesh_xe1s2")
+[node name="StatGridContainer" type="GridContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+script = ExtResource("14_505pd")
+
+[node name="MoveStatContainer" type="VBoxContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MoveStatLabel" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/MoveStatContainer"]
+layout_mode = 2
+text = "M"
+label_settings = SubResource("LabelSettings_kw3u7")
+horizontal_alignment = 1
+
+[node name="MoveStat" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/MoveStatContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "6
+"
+horizontal_alignment = 1
+
+[node name="ToughnessStatContainer" type="VBoxContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToughnessStatLabel" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/ToughnessStatContainer"]
+layout_mode = 2
+text = "T"
+label_settings = SubResource("LabelSettings_kw3u7")
+horizontal_alignment = 1
+
+[node name="ToughnessStat" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/ToughnessStatContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "4"
+horizontal_alignment = 1
+
+[node name="SaveStatContainer" type="VBoxContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SaveStatLabel" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/SaveStatContainer"]
+layout_mode = 2
+text = "SV"
+label_settings = SubResource("LabelSettings_kw3u7")
+horizontal_alignment = 1
+
+[node name="SaveStat" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/SaveStatContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "4"
+horizontal_alignment = 1
+
+[node name="WoundStatContainer" type="VBoxContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WoundStatLabel" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/WoundStatContainer"]
+layout_mode = 2
+text = "W"
+label_settings = SubResource("LabelSettings_kw3u7")
+horizontal_alignment = 1
+
+[node name="WoundStat" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/WoundStatContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "4"
+horizontal_alignment = 1
+
+[node name="LeadershipStatContainer" type="VBoxContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LeadershipStatLabel" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/LeadershipStatContainer"]
+layout_mode = 2
+text = "LD"
+label_settings = SubResource("LabelSettings_kw3u7")
+horizontal_alignment = 1
+
+[node name="LeadershipStat" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/LeadershipStatContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "4"
+horizontal_alignment = 1
+
+[node name="ObjectiveControlStatContainer" type="VBoxContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ObjectiveControlStatLabel" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/ObjectiveControlStatContainer"]
+layout_mode = 2
+text = "OC"
+label_settings = SubResource("LabelSettings_kw3u7")
+horizontal_alignment = 1
+
+[node name="ObjectiveControlStat" type="Label" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay/SelectedUnitPanelSpotlight/StatGridContainer/ObjectiveControlStatContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "4"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay"]
+layout_mode = 2
+
+[node name="UnitModelList" type="GridContainer" parent="GameUserInterface/BottomPanel/SelectedUnitPanel/Panel/SelectedUnitDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_qap17")
+columns = 3
+script = ExtResource("13_q2uat")
+
+[node name="PlayingArea" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="Tabletop" parent="PlayingArea" instance=ExtResource("4_f1w4r")]
+
+[node name="TerrainSpawnRegions" parent="PlayingArea" instance=ExtResource("5_56gn5")]
+
+[node name="Walls" parent="PlayingArea" instance=ExtResource("6_7hc8r")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 31.3178, 0)
+shadow_enabled = true
+
+[node name="DefaultCameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(-4.2222e-08, 0.866026, -0.5, 1.13133e-08, 0.5, 0.866026, 1, 3.09086e-08, -3.09086e-08, -24, 32, 4)
+
+[node name="GameCamera" type="Camera3D" parent="DefaultCameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+current = true
+size = 19.0
+far = 100.0
+
+[node name="AttackerCameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1.91069e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, -11, 31, -15)
 
 [node name="Unit" parent="." instance=ExtResource("11_kcp4g")]
+
+[node name="AttackingArmy" parent="." instance=ExtResource("18_4bxqk")]
+
+[node name="DefendingArmy" parent="." instance=ExtResource("18_4bxqk")]
+team = 1

@@ -7,11 +7,13 @@ extends CharacterBody3D
 
 var target_velocity = Vector3.ZERO
 
+var type = Globals.Type.Model
+
 var wounds;
 var move;
 var unit;
 var team;
-var number
+var number;
 
 func init(unit_p, team_p, move_p, wounds_p, number_p):
 	wounds = wounds_p;
@@ -58,8 +60,13 @@ func get_team():
 	return team
 
 func get_unit():
-	return unit.get_unit()
+	return unit
+
+func get_unit_name():
+	return self.get_unit().get_unit_name()
 
 func get_model_name():
-	return get_unit() + " " + number
+	return str(self.get_unit_name()) + " " + str(number)
 
+func get_type():
+	return self.type

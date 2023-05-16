@@ -5,7 +5,7 @@ func _ready():
 	var root_node = self.get_owner()
 	var team = root_node.get_team()
 	
-	if(team == Globals.Team.Attacker):
+	if(team == Globals.Team.Attacking):
 		self.get_active_material(0).albedo_color = Globals.Colors.AttackingTeamColor
 	else:
 		self.get_active_material(0).albedo_color = Globals.Colors.DefendingTeamColor

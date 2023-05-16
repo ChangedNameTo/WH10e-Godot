@@ -32,7 +32,6 @@ shape = SubResource("CylinderShape3D_0gojb")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.044, 0, 0, 0, 0.044, 0, 0, 0, 0.044, 0, 1, 0)
 mesh = SubResource("CylinderMesh_sk2py")
-skeleton = NodePath("")
 script = ExtResource("2_2bvyb")
 
 [node name="ModelUnitCohesion" type="CollisionShape3D" parent="."]
@@ -51,6 +50,3 @@ script = ExtResource("3_dexkc")
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 1, -2)
 
 [node name="Camera3D" type="Camera3D" parent="Pivot"]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
